@@ -60,6 +60,7 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
             mDrawPaint!!.color = path.color
             canvas.drawPath(path, mDrawPaint!!)
         }
+
         if (!mDrawPath!!.isEmpty) {
             mDrawPaint!!.strokeWidth = mDrawPath!!.brushThickness
             mDrawPaint!!.color = mDrawPath!!.color
