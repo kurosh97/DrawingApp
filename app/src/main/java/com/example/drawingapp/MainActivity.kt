@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         mImageButtonCurrentPaint = ll_paint_colors[1] as ImageButton
         mImageButtonCurrentPaint!!.setImageDrawable(
             ContextCompat.getDrawable(
@@ -53,5 +52,24 @@ class MainActivity : AppCompatActivity() {
             brushDialog.dismiss()
         })
         brushDialog.show()
+    }
+
+
+    fun paintClicked(view: View) {
+        if (view !== mImageButtonCurrentPaint) {
+            val imageButton = view as ImageButton
+            val colorTag = imageButton.tag.toString()
+            drawing_view.setColor(colorTag)
+            imageButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.pellet_pressed))
+
+            mImageButtonCurrentPaint!!.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.pellet_pressed
+                )
+            )
+
+            mImageButtonCurrentPaint = view
+        }
     }
 }
