@@ -4,4 +4,5 @@
     <string name="mediumB">image_medium</string>
     <string name="largeB">image_large</string>
     <string name="bImage">brush_image</string>
+    <string name="bcolorPellet">color_pellet</string>
 </resources>
