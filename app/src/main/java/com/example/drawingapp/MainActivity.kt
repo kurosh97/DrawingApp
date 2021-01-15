@@ -1,10 +1,13 @@
 package com.example.drawingapp
 
 import android.Manifest
+import android.app.Activity
 import android.app.Dialog
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -15,6 +18,7 @@ import androidx.core.view.get
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_brush_size.*
+import java.lang.Exception
 
 
 class MainActivity : AppCompatActivity() {
@@ -36,12 +40,37 @@ class MainActivity : AppCompatActivity() {
         ib_gallery.setOnClickListener {
             if (isReadStorageAllowed()) {
                 //run the code to get the image from gallery
+                val pickPhotoIntent =
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+
+                startActivityForResult(pickPhotoIntent, GALLERY)
             } else {
                 requestStoragePermission()
             }
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == GALLERY) {
+                try {
+                    if (data!!.data != null) {
+                        iv_background.visibility = View.VISIBLE
+                        iv_background.setImageURI(data.data)
+                    } else {
+                        Snackbar.make(
+                            constraintlayout,
+                            "Error in parsing the image",
+                            Snackbar.LENGTH_LONG
+                        ).setAction("Action", null).show()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
 
     private fun showBrushSizeChooserDialog() {
         val brushDialog = Dialog(this)
@@ -99,7 +128,7 @@ class MainActivity : AppCompatActivity() {
                 Snackbar.make(
                     constraintlayout,
                     "Permission Granted now you can read the storage file!",
-                    Snackbar.LENGTH_SHORT
+                    Snackbar.LENGTH_LONG
                 )
                     .setAction("Action", null).show()
             }
@@ -145,5 +174,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val STORAGE_PERMISSION_CODE = 1
+        private const val GALLERY = 2
     }
 }
