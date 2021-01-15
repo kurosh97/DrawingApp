@@ -5,5 +5,6 @@
     <string name="largeB">image_large</string>
     <string name="bImage">brush_image</string>
     <string name="bcolorPellet">color_pellet</string>
-    <string name="bImg">background image"</string>
+    <string name="bImg">background image</string>
+    <string name="bGallery">background_image</string>
 </resources>
